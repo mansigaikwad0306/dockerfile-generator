@@ -1,0 +1,22 @@
+```
+# Use the official Java 11 Java Image as the base image
+FROM openjdk:11-jdk-alpine
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the application code and dependencies into the container
+COPY . /app
+
+# Install the required dependencies in the container
+RUN mvn clean package --noFailsafe
+
+# Set the user to run the container as, to prevent the app from being accessible to the system user
+USER 1000
+
+# Expose the port the application will use, so it can be accessed from outside the container
+EXPOSE 8080
+
+# Run the application as a non-root user
+CMD ["java", "-jar", "myapp.jar"]
+```
